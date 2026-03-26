@@ -27,13 +27,13 @@ h1,h2,h3,h4{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spac
 button{font-family:inherit;cursor:pointer;border:none;outline:none;-webkit-appearance:none}
 input,select{font-family:inherit;outline:none;-webkit-appearance:none;border:none}
 .stripe{background:linear-gradient(90deg,var(--tl),transparent);height:3px}
-.hdr{background:linear-gradient(180deg,#111,#0A0A0A);padding:calc(var(--st) + 10px) 10px 10px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:2px solid var(--tl);position:sticky;top:0;z-index:100}
-.lg{display:flex;align-items:center;gap:8px;min-width:0;flex:1;overflow:hidden}
-.lg img{width:40px;height:40px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(0,191,165,.3))}
-.lg h1{font-size:14px;color:var(--tlb);margin:0;line-height:1.15;text-shadow:0 0 12px rgba(0,191,165,.3);white-space:nowrap}
-.lg .s{font-size:9px;color:var(--g5);letter-spacing:3px;font-family:'Oswald',sans-serif;font-weight:400}
-.hb{display:flex;gap:4px;flex-shrink:0}
-.bs{padding:7px 10px;border-radius:8px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:all .15s;white-space:nowrap}
+.hdr{background:linear-gradient(180deg,#111,#0A0A0A);padding:calc(var(--st) + 10px) 14px 10px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid var(--tl);position:sticky;top:0;z-index:100}
+.lg{display:flex;align-items:center;gap:10px}
+.lg img{width:52px;height:52px;object-fit:contain;filter:drop-shadow(0 0 8px rgba(0,191,165,.3))}
+.lg h1{font-size:15px;color:var(--tlb);margin:0;line-height:1.15;text-shadow:0 0 12px rgba(0,191,165,.3)}
+.lg .s{font-size:10px;color:var(--g5);letter-spacing:3px;font-family:'Oswald',sans-serif;font-weight:400}
+.hb{display:flex;gap:6px}
+.bs{padding:8px 14px;border-radius:8px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;transition:all .15s}
 .bt{background:var(--tl);color:var(--wh)}.bt:active{background:var(--tlb);transform:scale(.96)}
 .bo{background:var(--or);color:var(--wh)}.bo:active{opacity:.85;transform:scale(.96)}
 .tabs{display:flex;background:var(--bk2);border-bottom:1px solid var(--brd);position:sticky;top:72px;z-index:99}
@@ -113,6 +113,26 @@ input,select{font-family:inherit;outline:none;-webkit-appearance:none;border:non
 .psl{font-size:11px;color:var(--g5);text-transform:uppercase;letter-spacing:1.5px;font-weight:700}
 .psv{font-family:'Oswald',sans-serif;font-size:26px;color:var(--tlb)}
 .psw{color:var(--or)}
+/* Sticky plan counter bar on Drills tab */
+.plan-bar{position:sticky;bottom:0;left:0;right:0;z-index:50;background:linear-gradient(135deg,#111,#1A1A1A);border-top:2px solid var(--tl);padding:10px 14px;display:none;align-items:center;justify-content:space-between;gap:10px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+.plan-bar.vis{display:flex}
+.plan-bar .pb-info{display:flex;align-items:center;gap:10px}
+.plan-bar .pb-count{font-family:'Oswald',sans-serif;font-size:14px;color:var(--tlb);letter-spacing:1px}
+.plan-bar .pb-time{font-family:'Oswald',sans-serif;font-size:22px;color:var(--wh);letter-spacing:1px}
+.plan-bar .pb-unit{font-size:10px;color:var(--g5);letter-spacing:1px}
+.plan-bar .pb-btn{padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;background:var(--tl);color:var(--wh)}
+.plan-bar .pb-btn:active{background:var(--tlb);transform:scale(.96)}
+/* Drag-and-drop plan items */
+.pi{transition:transform .15s,box-shadow .15s,opacity .15s}
+.pi.dragging{opacity:.7;box-shadow:0 8px 24px rgba(0,191,165,.25);transform:scale(1.02);z-index:10;position:relative}
+.pi.drag-over{border-top:2px solid var(--tlb)}
+.pi .drag-handle{cursor:grab;touch-action:none;padding:4px 2px;color:var(--g6);font-size:14px;display:flex;align-items:center;user-select:none;-webkit-user-select:none}
+.pi .drag-handle:active{color:var(--tlb);cursor:grabbing}
+/* Push-to-top / drop-to-bottom shortcut buttons */
+.pi .jump-btns{display:flex;flex-direction:column;gap:1px}
+.pi .jmp{background:none;color:var(--g7);font-size:9px;padding:1px 3px;line-height:1;letter-spacing:.5px;font-weight:700}
+.pi .jmp:active{color:var(--tlb)}
+.pi .jmp.dis{opacity:.2;pointer-events:none}
 .mo{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:200;align-items:flex-end;justify-content:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
 .mo.op{display:flex}
 .md{background:var(--card);border-radius:16px 16px 0 0;border-top:2px solid var(--tl);width:100%;max-width:480px;padding:24px 20px calc(var(--sb) + 24px);animation:su .25s ease}
@@ -185,14 +205,11 @@ input,select{font-family:inherit;outline:none;-webkit-appearance:none;border:non
   .vw{display:block!important;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
   .vw-l{max-width:440px;border-right:1px solid var(--brd)}
   .vw-p{flex:1}
-  .vw-r{display:none!important}
-  .vw-r.on{display:block!important;flex:1}
   .md{border-radius:16px;margin-bottom:40px}
   .mo{align-items:center}
   .hdr{padding:12px 20px}
   .lg img{width:60px;height:60px}
   .lg h1{font-size:18px}
-  .bs{padding:8px 14px;font-size:11px;letter-spacing:1.2px}
 }
 @media print{
   body{background:#fff!important;color:#111!important}
@@ -235,6 +252,14 @@ input,select{font-family:inherit;outline:none;-webkit-appearance:none;border:non
     </div><button class="bs bt" onclick="openAd()" style="white-space:nowrap">+ New</button></div></div>
     <div class="pills" id="pls"></div>
     <div class="dl" id="drl"></div>
+    <div class="plan-bar" id="planBar">
+      <div class="pb-info">
+        <span class="pb-count" id="pbCount">0 drills</span>
+        <span style="color:var(--g7)">|</span>
+        <span class="pb-time" id="pbTime">0</span><span class="pb-unit">min</span>
+      </div>
+      <button class="pb-btn" onclick="stab('p')">View Plan &rarr;</button>
+    </div>
   </div>
   <div class="vw vw-p" id="vp">
     <div class="ps">
@@ -427,8 +452,6 @@ function stab(t){
   document.getElementById("vl").className="vw vw-l"+(t==="l"?" on":"");
   document.getElementById("vp").className="vw vw-p"+(t==="p"?" on":"");
   document.getElementById("vr").className="vw vw-r"+(t==="r"?" on":"");
-  if(t==="r"){document.getElementById("vl").style.display="none";document.getElementById("vp").style.display="none";}
-  else{document.getElementById("vl").style.display="";document.getElementById("vp").style.display="";}
 }
 
 function rpls(){
@@ -487,12 +510,88 @@ function rd(j){P.splice(j,1);rdr();rpl();ub();}
 function rbi(id){for(var j=0;j<P.length;j++){if(P[j].di===id){P.splice(j,1);break;}}rdr();rpl();ub();}
 function ud(j,v){var n=parseInt(v,10);if(isNaN(n)||n<1)n=1;if(n>60)n=60;P[j].du=n;rpl();}
 function mv(j,dir){var k=j+dir;if(k<0||k>=P.length)return;var t=P[j];P[j]=P[k];P[k]=t;rpl();}
+function mvTop(j){if(j<=0)return;var it=P.splice(j,1)[0];P.unshift(it);rpl();}
+function mvBot(j){if(j>=P.length-1)return;var it=P.splice(j,1)[0];P.push(it);rpl();}
+// Drag-and-drop state
+var dragIdx=null;
+function dStart(e,j){
+  dragIdx=j;
+  var el=e.currentTarget.closest('.pi');
+  el.classList.add('dragging');
+  if(e.dataTransfer){e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',j);}
+}
+function dOver(e,j){
+  e.preventDefault();if(e.dataTransfer)e.dataTransfer.dropEffect='move';
+  var items=document.querySelectorAll('#pdr .pi');
+  items.forEach(function(el){el.classList.remove('drag-over');});
+  if(dragIdx!==null&&dragIdx!==j)items[j].classList.add('drag-over');
+}
+function dDrop(e,j){
+  e.preventDefault();
+  if(dragIdx===null||dragIdx===j){dEnd();return;}
+  var it=P.splice(dragIdx,1)[0];
+  P.splice(j,0,it);
+  dragIdx=null;
+  rpl();
+}
+function dEnd(){
+  dragIdx=null;
+  var items=document.querySelectorAll('#pdr .pi');
+  items.forEach(function(el){el.classList.remove('dragging');el.classList.remove('drag-over');});
+}
+// Touch drag-and-drop
+var touchDragIdx=null,touchClone=null,touchStartY=0,touchCurY=0;
+function tDragStart(e,j){
+  touchDragIdx=j;touchStartY=e.touches[0].clientY;touchCurY=touchStartY;
+  var el=e.currentTarget.closest('.pi');
+  el.classList.add('dragging');
+  // Prevent scroll while dragging
+  document.body.style.overflow='hidden';
+}
+function tDragMove(e){
+  if(touchDragIdx===null)return;
+  e.preventDefault();
+  touchCurY=e.touches[0].clientY;
+  var items=document.querySelectorAll('#pdr .pi');
+  items.forEach(function(el,i){
+    el.classList.remove('drag-over');
+    var r=el.getBoundingClientRect();
+    if(i!==touchDragIdx&&touchCurY>=r.top&&touchCurY<=r.bottom){
+      el.classList.add('drag-over');
+    }
+  });
+}
+function tDragEnd(e){
+  if(touchDragIdx===null)return;
+  document.body.style.overflow='';
+  var items=document.querySelectorAll('#pdr .pi');
+  var dropIdx=-1;
+  items.forEach(function(el,i){
+    if(el.classList.contains('drag-over'))dropIdx=i;
+    el.classList.remove('drag-over');el.classList.remove('dragging');
+  });
+  if(dropIdx>=0&&dropIdx!==touchDragIdx){
+    var it=P.splice(touchDragIdx,1)[0];
+    P.splice(dropIdx,0,it);
+    rpl();
+  }
+  touchDragIdx=null;
+}
 function ub(){
   var b=document.getElementById("bdg");
   var rt=document.getElementById("t3");
   var rb=document.getElementById("hrun");
-  if(P.length>0){b.style.display="inline-block";b.textContent=P.length;rt.style.display="";rb.style.display="";}
-  else{b.style.display="none";rt.style.display="none";rb.style.display="none";}
+  var pb=document.getElementById("planBar");
+  if(P.length>0){
+    b.style.display="inline-block";b.textContent=P.length;rt.style.display="";rb.style.display="";
+    var tot=0;for(var j=0;j<P.length;j++)tot+=P[j].du;
+    document.getElementById("pbCount").textContent=P.length+" drill"+(P.length!==1?"s":"");
+    document.getElementById("pbTime").textContent=tot;
+    pb.className="plan-bar vis";
+  } else {
+    b.style.display="none";rt.style.display="none";rb.style.display="none";
+    pb.className="plan-bar";
+  }
 }
 
 function tpd(j){var el=document.getElementById("pd_"+j);if(el)el.className=el.className.indexOf("sh")>-1?"pdt":"pdt sh";}
@@ -505,13 +604,20 @@ function rpl(){
   var h="",tot=0;
   for(var j=0;j<P.length;j++){
     var it=P[j],d=gd(it.di);if(!d)continue;tot+=it.du;
-    h+="<div class=\"pi\" style=\"flex-wrap:wrap\">";
+    h+="<div class=\"pi\" style=\"flex-wrap:wrap\" draggable=\"true\" ondragstart=\"dStart(event,"+j+")\" ondragover=\"dOver(event,"+j+")\" ondrop=\"dDrop(event,"+j+")\" ondragend=\"dEnd()\">";
+    // Drag handle (touch)
+    h+="<div class=\"drag-handle\" ontouchstart=\"tDragStart(event,"+j+")\" ontouchmove=\"tDragMove(event)\" ontouchend=\"tDragEnd(event)\">&#9776;</div>";
+    // Up/down arrows + jump shortcuts
+    h+="<div style=\"display:flex;flex-direction:column;align-items:center;gap:0\">";
+    h+="<button class=\"jmp"+(j===0?" dis":"")+"\" onclick=\"mvTop("+j+")\" title=\"Move to top\">&#9652;&#9652;</button>";
     h+="<div class=\"pia\"><button class=\"par\" onclick=\"mv("+j+",-1)\">&#9650;</button><button class=\"par\" onclick=\"mv("+j+",1)\">&#9660;</button></div>";
+    h+="<button class=\"jmp"+(j===P.length-1?" dis":"")+"\" onclick=\"mvBot("+j+")\" title=\"Move to bottom\">&#9662;&#9662;</button>";
+    h+="</div>";
     h+="<div class=\"pn\">"+(j+1)+"</div>";
     h+="<div class=\"pb\"><div class=\"pnm\">"+d.n+"</div><div class=\"pct\">"+d.c+" <span class=\"ddet\" onclick=\"tpd("+j+")\">Details</span></div></div>";
     h+="<div class=\"pdr\"><input type=\"number\" value=\""+it.du+"\" min=\"1\" max=\"60\" onchange=\"ud("+j+",this.value)\"><span>min</span></div>";
     h+="<button class=\"prm\" onclick=\"rd("+j+")\">&#10005;</button>";
-    h+="<div class=\"pdt\" id=\"pd_"+j+"\" style=\"width:100%;margin-left:62px\">"+d.t+"</div>";
+    h+="<div class=\"pdt\" id=\"pd_"+j+"\" style=\"width:100%;margin-left:80px\">"+d.t+"</div>";
     h+="</div>";
   }
   el.innerHTML=h;sm.style.display="flex";
@@ -1096,7 +1202,7 @@ function init(){
   var mm=("0"+(d.getMonth()+1)).slice(-2);
   var dd=("0"+d.getDate()).slice(-2);
   document.getElementById("md").value=d.getFullYear()+"-"+mm+"-"+dd;
-  rpls();rdr();rpl();
+  rpls();rdr();rpl();ub();
 }
 init.done=false;
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}
