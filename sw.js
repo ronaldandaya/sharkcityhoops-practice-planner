@@ -1,4 +1,4 @@
-var CACHE_NAME = 'sch-planner-v6';
+var CACHE_NAME = 'sch-planner-v7';
 var ASSETS = [
   './',
   './index.html',
