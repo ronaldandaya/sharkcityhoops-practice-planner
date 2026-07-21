@@ -887,11 +887,16 @@ function buildRows(){
 function exPr(){
   clEx();var b=buildRows();
   var h=buildExport(b.m,b.tot,b.rows);
-  var fr=document.getElementById("pf");
-  if(!fr){fr=document.createElement("iframe");fr.id="pf";fr.style.cssText="position:fixed;left:-9999px;top:0;width:800px;height:600px;border:none;";document.body.appendChild(fr);}
-  var doc=fr.contentDocument||fr.contentWindow.document;
-  doc.open();doc.write(h);doc.close();
-  setTimeout(function(){try{fr.contentWindow.focus();fr.contentWindow.print();}catch(e){var bl=new Blob([h],{type:"text/html"});var u=URL.createObjectURL(bl);window.open(u,"_blank");}},300);
+  var bl=new Blob([h],{type:"text/html"});
+  var u=URL.createObjectURL(bl);
+  var w=window.open(u,"_blank");
+  if(!w){
+    var fr=document.getElementById("pf");
+    if(!fr){fr=document.createElement("iframe");fr.id="pf";fr.style.cssText="position:fixed;left:-9999px;top:0;width:800px;height:600px;border:none;";document.body.appendChild(fr);}
+    var doc=fr.contentDocument||fr.contentWindow.document;
+    doc.open();doc.write(h);doc.close();
+    setTimeout(function(){try{fr.contentWindow.focus();fr.contentWindow.print();}catch(e){alert("Please allow popups to export PDF.");}},300);
+  }
 }
 
 function exPng(){
@@ -938,10 +943,21 @@ function exPng(){
   setTimeout(function(){
     html2canvas(el,{scale:2,useCORS:true,backgroundColor:"#0A0A0A",logging:false}).then(function(canvas){
       document.body.removeChild(el);
-      var link=document.createElement("a");
-      link.download="SCH-Practice-"+b.m.dt+".png";
-      link.href=canvas.toDataURL("image/png");
-      document.body.appendChild(link);link.click();document.body.removeChild(link);
+      var fname="SCH-Practice-"+b.m.dt+".png";
+      canvas.toBlob(function(blob){
+        if(navigator.canShare&&navigator.canShare({files:[new File([blob],fname,{type:"image/png"})]})){
+          navigator.share({files:[new File([blob],fname,{type:"image/png"})],title:"SCH Practice Plan"}).catch(function(){});
+        } else {
+          var u=URL.createObjectURL(blob);
+          var w=window.open(u,"_blank");
+          if(!w){
+            var link=document.createElement("a");
+            link.download=fname;link.href=u;
+            document.body.appendChild(link);link.click();document.body.removeChild(link);
+          }
+          setTimeout(function(){URL.revokeObjectURL(u);},5000);
+        }
+      },"image/png");
     }).catch(function(err){
       document.body.removeChild(el);
       alert("PNG export failed: "+err.message);
